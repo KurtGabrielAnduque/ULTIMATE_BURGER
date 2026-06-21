@@ -1,122 +1,113 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import './App.css'
 
+// Import the Pages for customer side
+// Arrange it base on the sequence of the navigation bar
+
+// Import the homepage (default page for client)
+import HomePage from './pages/CustomerPages/HomePage/HomePage'
+// Import Menu Page (showing list of menus)
+import MenuPage from './pages/CustomerPages/MenuPage/MenuPage'
+// Import Locations (showing branches locations of the Ultimate Burger)
+import LocationPage from './pages/CustomerPages/LocationPage/LocationPage'
+// Import Review (showing all review of customer after experience eating in UB)
+import ReviewPage from './pages/CustomerPages/ReviewPage/ReviewPage'
+// Import Contact Page
+import ContactPage from './pages/CustomerPages/ContactPage/ContactPage'
+// Import CartPage (it must be Icon not a text type (a cart Icon))
+import CartPage from './pages/CustomerPages/CartPage/CartPage'
+// Import Account Page (also in icon form)
+import AccountPage from './pages/CustomerPages/AccountPage/AccountPage'
+
+// Import the Pages for the admin side
+// Arrange it base on the sequence of the navigation bar
+import DashBoard from './pages/AdminPages/DashBoardPage/DashBoardPage'
+import OrdersPage from './pages/AdminPages/OrdersPage/OrdersPage'
+import InventoryPage from './pages/AdminPages/InventoryPage/InventoryPage'
+import OrderHistoryPage from './pages/AdminPages/OrderHistoryPage/OrderHistoryPage'
+import ManageMenuPage from './pages/AdminPages/ManageMenuPage/ManageMenuPage'
+import StorePage from './pages/AdminPages/StorePage/StorePage'
+
+
+
+// this is just the illustration of how the guard will work
+// this will become real when we start doing the backend part
+function AdminNavigator({ children }){
+  let isAdmin = true
+
+  if  (!isAdmin){
+    return <Navigate to = '/' replace/>
+  }
+
+  return children
+}
+
+
+// main app here
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
+  return(
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      
+      <Routes>
+        {/* router for the  Customers*/}
+        <Route index element = {<HomePage />}/>
+        <Route path='/menu' element = {<MenuPage/>}/>
+        <Route path='/location' element = {<LocationPage />}/>
+        <Route path='/review' element = {<ReviewPage />}/>
+        <Route path='/contactus' element = {<ContactPage />}/>
+        <Route path='/mycart' element = {<CartPage />}/>
+        <Route path='/account' element = {<AccountPage/>}/>
 
-      <div className="ticks"></div>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {/* route for the Admin side*/}
+        <Route path='/admin/dashboard' element = {
+          <AdminNavigator>
+            <DashBoard/>
+          </AdminNavigator>
+        }/>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+        <Route path='/admin/orders' element = {
+          <AdminNavigator>
+            <OrdersPage/>
+          </AdminNavigator>
+        }/>
+
+        <Route path='/admin/inventory' element = {
+          <AdminNavigator>
+            <InventoryPage/>
+          </AdminNavigator>
+        }/>
+
+        <Route path='/admin/orderhistory' element = {
+          <AdminNavigator>
+            <OrderHistoryPage/>
+          </AdminNavigator>
+        }/>
+
+        <Route path='/admin/managemenu' element = {
+          <AdminNavigator>
+            <ManageMenuPage/>
+          </AdminNavigator>
+        }/>
+
+        <Route path='/admin/store' element = {
+          <AdminNavigator>
+            <StorePage/>
+          </AdminNavigator>
+        }/>
+
+
+        {/* catcher if the user type a url that doesnt even exist*/}
+        <Route path='*' element = {<Navigate to = '/' replace/>}/>
+      </Routes>
+       
+      
     </>
-  )
+  );
 }
 
 export default App
