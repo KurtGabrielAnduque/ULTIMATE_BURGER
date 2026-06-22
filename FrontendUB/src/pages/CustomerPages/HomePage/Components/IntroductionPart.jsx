@@ -58,7 +58,7 @@ function IntroductionPart() {
                             </div>
                             <div className="w-px h-12 bg-slate-200"></div>
                             <div>
-                                <p className="text-3xl font-extrabold text-slate-900">4.9</p>
+                                <p className="text-3xl font-extrabold text-slate-900">4.9 Stars</p>
                                 <div className="flex items-center gap-1 text-yellow-400">
                                     <Star size={16} className="fill-current" />
                                     <Star size={16} className="fill-current" />

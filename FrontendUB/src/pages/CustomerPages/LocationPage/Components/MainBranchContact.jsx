@@ -61,11 +61,11 @@ function MainBranchContact() {
 
             {/* RIGHT: Google Maps Embed */}
             {/* min-h-[400px] ensures the map doesn't shrink to 0 height on mobile */}
-            <div className="bg-zinc-950 min-h-[400px] lg:min-h-full">
+            <div className="bg-zinc-950 min-h-[400px] lg:min-h-full ">
               <iframe
                 src="https://maps.google.com/maps?q=14.6271371,121.0366218&z=16&output=embed"
                 loading="lazy"
-                className="w-full h-full border-0 " 
+                className="w-full h-full border-0 opacity-80" 
                 /* Note: grayscale invert opacity-80 gives the map a cool dark mode look! */
                 allowFullScreen=""
                 aria-hidden="false"

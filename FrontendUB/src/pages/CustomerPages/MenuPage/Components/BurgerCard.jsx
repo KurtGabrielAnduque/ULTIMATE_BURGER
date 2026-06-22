@@ -26,6 +26,7 @@ function BurgerCard({ product, onOpenModal }) {
           className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
         >
           Select Options
+          
         </button>
       </div>
     </div>
