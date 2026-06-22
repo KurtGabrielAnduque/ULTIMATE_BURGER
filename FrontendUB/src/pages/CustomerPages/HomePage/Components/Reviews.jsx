@@ -21,7 +21,7 @@ function Reviews() {
                             <p className="text-slate-500">Don't just take our word for it.</p>
                         </div>
                         <Link to = '/review'>
-                            <button className="text-red-500 font-bold hover:underline hidden sm:block">
+                            <button className="text-red-500 font-bold hover:underline hidden sm:block cursor-pointer">
                                 View all reviews &rarr;
                             </button>
                         </Link>
