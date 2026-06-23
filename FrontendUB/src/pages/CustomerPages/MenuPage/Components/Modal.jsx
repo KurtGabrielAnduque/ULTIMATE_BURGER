@@ -6,6 +6,9 @@ function Modal({ closeModal, product }) {
   const [selectedSize, setSelectedSize] = useState(product.size?.[0]?.id || null);
   const [selectedFlavor, setSelectedFlavor] = useState(product.friesFlavor?.[0]?.id || null);
   
+  // NEW: Track Quantity
+  const [quantity, setQuantity] = useState(1);
+  
   // Track multiple add-ons and drinks
   const [selectedAddOns, setSelectedAddOns] = useState({});
   const [selectedDrinks, setSelectedDrinks] = useState({});
@@ -18,26 +21,29 @@ function Modal({ closeModal, product }) {
     setSelectedDrinks(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
-  // Dynamic Price Calculation
-  let currentTotal = product.price;
+  // Dynamic Price Calculation for ONE single item
+  let singleItemTotal = product.price;
 
   if (selectedSize && product.size) {
     const sizeData = product.size.find(s => s.id === selectedSize);
-    if (sizeData) currentTotal = sizeData.price;
+    if (sizeData) singleItemTotal = sizeData.price;
   }
   
   if (selectedFlavor && product.friesFlavor) {
     const flavorData = product.friesFlavor.find(f => f.id === selectedFlavor);
-    if (flavorData && flavorData.price) currentTotal += flavorData.price;
+    if (flavorData && flavorData.price) singleItemTotal += flavorData.price;
   }
 
   product.addOns?.forEach(addon => {
-    if (selectedAddOns[addon.id]) currentTotal += addon.price;
+    if (selectedAddOns[addon.id]) singleItemTotal += addon.price;
   });
 
   product.drinks?.forEach(drink => {
-    if (selectedDrinks[drink.id]) currentTotal += drink.price;
+    if (selectedDrinks[drink.id]) singleItemTotal += drink.price;
   });
+
+  // NEW: Final Total is the single item multiplied by quantity
+  const currentTotal = singleItemTotal * quantity;
 
   return (
     <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm">
@@ -182,9 +188,31 @@ function Modal({ closeModal, product }) {
 
           {/* Sticky Footer for Buttons (Always visible) */}
           <div className="p-6 sm:p-8 bg-white border-t border-slate-100 shrink-0">
+            
+            {/* NEW: Quantity Selector */}
             <div className="flex items-center justify-between mb-4">
+              <span className="font-bold text-slate-900">Quantity</span>
+              <div className="flex items-center bg-slate-100 rounded-lg p-1 border border-slate-200">
+                <button 
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                  className="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-white hover:shadow-sm rounded-md transition-all font-bold text-lg"
+                >
+                  -
+                </button>
+                <span className="w-10 text-center font-bold text-slate-900">{quantity}</span>
+                <button 
+                  onClick={() => setQuantity(quantity + 1)} 
+                  className="w-8 h-8 flex items-center justify-center text-slate-600 hover:bg-white hover:shadow-sm rounded-md transition-all font-bold text-lg"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Total Row */}
+            <div className="flex items-center justify-between mb-6">
               <span className="font-bold text-slate-900">Total</span>
-              <span className="text-2xl font-extrabold text-red-500">₱{currentTotal.toFixed(2)}</span>
+              <span className="text-3xl font-extrabold text-red-500">₱{currentTotal.toFixed(2)}</span>
             </div>
             
             <div className='flex gap-3 sm:gap-4'>
@@ -197,7 +225,7 @@ function Modal({ closeModal, product }) {
               
               <button
                 onClick={() => {
-                  alert("Added to cart logic coming soon!");
+                  alert(`Added ${quantity}x to cart logic coming soon!`);
                   closeModal();
                 }}
                 className="w-2/3 bg-red-500 text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-1 transition-all duration-300"

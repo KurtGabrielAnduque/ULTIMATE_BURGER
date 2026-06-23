@@ -25,7 +25,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
           {menuData.filter(item => item.category === 'burger').map((item) => (
             /* Pass the state updater down as a prop */
-            <BurgerCard key={item.id} product={item} onOpenModal={setSelectedProduct} />
+            <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
         </div>
 
@@ -36,7 +36,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {menuData.filter(item => item.category === 'sides').map((item) => (
             /* Pass the state updater down as a prop */
-            <BurgerCard key={item.id} product={item} onOpenModal={setSelectedProduct} />
+            <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
         </div>
 
@@ -48,7 +48,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {menuData.filter(item => item.category === 'pizza').map((item) => (
             /* Pass the state updater down as a prop */
-            <BurgerCard key={item.id} product={item} onOpenModal={setSelectedProduct} />
+            <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
         </div>
 
@@ -59,7 +59,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {menuData.filter(item => item.category === 'pizzaBurger').map((item) => (
             /* Pass the state updater down as a prop */
-            <BurgerCard key={item.id} product={item} onOpenModal={setSelectedProduct} />
+            <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
         </div>
         
@@ -70,7 +70,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
           {menuData.filter(item => item.category === 'pizzaBurger2in1').map((item) => (
             /* Pass the state updater down as a prop */
-            <BurgerCard key={item.id} product={item} onOpenModal={setSelectedProduct} />
+            <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
         </div>
         

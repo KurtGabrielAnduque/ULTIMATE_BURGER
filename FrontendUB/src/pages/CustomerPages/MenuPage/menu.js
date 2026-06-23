@@ -1,6 +1,6 @@
 export const menuData = [
     {
-        id: '1',
+        productId: '1',
         category: 'burger',
         image: '/images/products/QuarterPounderBeef.png',
         name: 'Quarter Pounder Beef',
@@ -20,7 +20,7 @@ export const menuData = [
         updatedAt: ''
     },
     { 
-        id: '2', 
+        productId: '2', 
         category: 'burger', 
         image: '/images/products/QuarterPounderBeef.png', 
         name: 'Quarter Pounder Chicken', 
@@ -40,7 +40,7 @@ export const menuData = [
         updatedAt: '' 
     },
     { 
-        id: '3', 
+        productId: '3', 
         category: 'burger', 
         image: '/images/products/QuarterPounder2Patty.jpg', 
         name: 'Quarter Pounder Double Patty', 
@@ -60,7 +60,7 @@ export const menuData = [
         updatedAt: '' 
     },
     { 
-        id: '4', 
+        productId: '4', 
         category: 'burger', 
         image: '/images/products/QuarterPounderShawarma.jpg', 
         name: 'Quarter Pounder Shawarma', 
@@ -80,7 +80,7 @@ export const menuData = [
         updatedAt: '' 
     },
     { 
-        id: '5', 
+        productId: '5', 
         category: 'burger', 
         image: '/images/products/QuarterPounderBBQ.jpg', 
         name: 'Quarter Pounder BBQ',
@@ -100,7 +100,7 @@ export const menuData = [
         updatedAt: '' 
     },
     { 
-        id: '6', 
+        productId: '6', 
         category: 'burger', 
         image: '/images/products/QuarterPounder-w-Fries.jpg', 
         name: 'Quarter Pounder Beef w/ Fries',
@@ -126,7 +126,7 @@ export const menuData = [
         updatedAt: '' 
     },
     {
-        id: '7', 
+        productId: '7', 
         category: 'sides', 
         image: '/images/products/Nachos-Overload.png', 
         name: 'Nachos Overload', 
@@ -145,7 +145,7 @@ export const menuData = [
         updatedAt: '' 
     },
     {
-        id: '8', 
+        productId: '8', 
         category: 'sides', 
         image: '/images/products/burgers.jpg', 
         name: 'Nacho-Yo-Fries', 
@@ -164,7 +164,7 @@ export const menuData = [
         updatedAt: '' 
     },
     {
-        id: '9', 
+        productId: '9', 
         category: 'sides', 
         image: '/images/products/Shawarma.png', 
         name: 'Shawarma (Pita)', 
@@ -182,7 +182,7 @@ export const menuData = [
         updatedAt: '' 
     },
     {
-        id: '10', 
+        productId: '10', 
         category: 'sides', 
         image: '/images/products/Fries.png', 
         name: 'Fries',
@@ -211,7 +211,7 @@ export const menuData = [
         updatedAt: '' 
     },
     {
-        id: '11',
+        productId: '11',
         category : 'pizza',
         image : '/images/products/all-vegie-pizza.jpg',
         name: 'All Veggies Pizza',
@@ -225,7 +225,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '12',
+        productId: '12',
         category : 'pizza',
         image : '/images/products/cheesy-cheese-pizza.png',
         name: 'Cheesy Cheese Pizza',
@@ -239,7 +239,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '13',
+        productId: '13',
         category : 'pizza',
         image : '/images/products/peperoni-mushroom-pizza.jpg',
         name: 'Pepperoni Mushroom Pizza',
@@ -253,7 +253,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '14',
+        productId: '14',
         category : 'pizza',
         image : '/images/products/shawarma-pizza.jpg',
         name: 'Shawarma Pizza',
@@ -267,7 +267,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '15',
+        productId: '15',
         category : 'pizza',
         image : '/images/products/hungarian-sausage-pizza.jpg',
         name: 'Hungarian Sausage Pizza',
@@ -281,7 +281,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '16',
+        productId: '16',
         category : 'pizza',
         image : '/images/products/hawaiian-pizza.jpg',
         name: 'Hawaiian Pizza',
@@ -295,7 +295,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '17',
+        productId: '17',
         category : 'pizza',
         image : '/images/products/all-meat.jpg',
         name: 'All Meat Pizza',
@@ -309,7 +309,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '18',
+        productId: '18',
         category : 'pizza',
         image : '/images/products/all-meat-overload-pizza.png',
         name: 'All Meat Overload Pizza',
@@ -323,7 +323,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '19',
+        productId: '19',
         category : 'pizzaBurger',
         image : '/images/products/Pepperoni-Mushroom-burge-pizza.png',
         name: 'Hawaiian Pizza Burger',
@@ -333,7 +333,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '20',
+        productId: '20',
         category : 'pizzaBurger',
         image : '/images/products/Pepperoni-Mushroom-burge-pizza.png',
         name: 'Pepperoni Mushroom Pizza Burger',
@@ -343,7 +343,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '21',
+        productId: '21',
         category : 'pizzaBurger',
         image : '/images/products/Pepperoni-Mushroom-burge-pizza.png',
         name: 'Hungarian Suasage Pizza Burger',
@@ -353,7 +353,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '22',
+        productId: '22',
         category : 'pizzaBurger',
         image : '/images/products/Mozzarella-burger-pizza.png',
         name: 'Mozzarella Pizza Burger',
@@ -363,7 +363,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '23',
+        productId: '23',
         category : 'pizzaBurger',
         image : '/images/products/Mozzarella-burger-pizza.png',
         name: 'Cheesy Cheese Pizza Burger',
@@ -373,7 +373,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '24',
+        productId: '24',
         category : 'pizzaBurger',
         image : '/images/products/Mozzarella-burger-pizza.png',
         name: 'Shawarma Pizza Burger',
@@ -383,7 +383,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '25',
+        productId: '25',
         category : 'pizzaBurger2in1',
         image : '/images/products/Pepperoni-Cheesy-Cheese-burger-pizza.png',
         name: 'Hawaiian / Mozzarella Pizza Burger',
@@ -393,7 +393,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '26',
+        productId: '26',
         category : 'pizzaBurger2in1',
         image : '/images/products/Pepperoni-Cheesy-Cheese-burger-pizza.png',
         name: 'Pepperoni / Hawaiian Pizza Burger',
@@ -403,7 +403,7 @@ export const menuData = [
         updatedAt: ''
     },
     {
-        id: '27',
+        productId: '27',
         category : 'pizzaBurger2in1',
         image : '/images/products/Pepperoni-Cheesy-Cheese-burger-pizza.png',
         name: 'Cheesy Cheese / Pepperoni Pizza Burger',
