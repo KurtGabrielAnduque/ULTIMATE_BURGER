@@ -37,6 +37,8 @@ import StorePage from './pages/AdminPages/StorePage/StorePage'
 
 
 
+import LoginPage from './pages/Components/LoginPage'
+
 // this is just the illustration of how the guard will work
 // this will become real when we start doing the backend part
 function AdminNavigator({ children }){
@@ -65,6 +67,8 @@ function App() {
         <Route path='/mycart' element = {<CartPage />}/>
         <Route path='/account' element = {<AccountPage/>}/>
         <Route path='/customer-orders' element = {<CustomerOrdersPage/>}/>
+
+        <Route path='/login-signup' element = {<LoginPage/>}/>
 
 
         {/* route for the Admin side*/}
