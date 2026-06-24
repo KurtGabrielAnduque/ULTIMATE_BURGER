@@ -28,7 +28,7 @@ import CustomerOrdersPage from './pages/CustomerPages/CustomerOrdersPage/Custome
 
 // Import the Pages for the admin side
 // Arrange it base on the sequence of the navigation bar
-import DashBoard from './pages/AdminPages/DashBoardPage/DashBoardPage'
+import DashBoardPage from './pages/AdminPages/DashBoardPage/DashBoardPage'
 import OrdersPage from './pages/AdminPages/OrdersPage/OrdersPage'
 import InventoryPage from './pages/AdminPages/InventoryPage/InventoryPage'
 import OrderHistoryPage from './pages/AdminPages/OrderHistoryPage/OrderHistoryPage'
@@ -74,7 +74,7 @@ function App() {
         {/* route for the Admin side*/}
         <Route path='/admin/dashboard' element = {
           <AdminNavigator>
-            <DashBoard/>
+            <DashBoardPage/>
           </AdminNavigator>
         }/>
 

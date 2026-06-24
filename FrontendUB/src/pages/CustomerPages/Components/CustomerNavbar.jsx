@@ -111,6 +111,18 @@ export default function CustomerNavbar() {
               </span>
             </Link>
 
+            {/* this will only appear if the user haven't login yet*/}
+            <Link
+                to='/login-signup'
+                className={`p-3 rounded-lg text-sm font-semibold transition-colors duration-200 ${
+                  isActive('/login-signup') 
+                    ? 'text-white bg-zinc-800' 
+                    : 'text-zinc-400 hover:text-white' // Subtle gray that turns bright white on hover
+                }`}
+              >
+                Login/Sign Up
+              </Link>
+
             {/* Mobile Menu Hamburger Button (Hidden on Desktop) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
