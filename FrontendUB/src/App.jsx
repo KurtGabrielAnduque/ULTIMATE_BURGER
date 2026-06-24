@@ -23,6 +23,9 @@ import CartPage from './pages/CustomerPages/CartPage/CartPage'
 // Import Account Page (also in icon form)
 import AccountPage from './pages/CustomerPages/AccountPage/AccountPage'
 
+// Import Orders Page (in form of icon)
+import CustomerOrdersPage from './pages/CustomerPages/CustomerOrdersPage/CustomerOrdersPage'
+
 // Import the Pages for the admin side
 // Arrange it base on the sequence of the navigation bar
 import DashBoard from './pages/AdminPages/DashBoardPage/DashBoardPage'
@@ -61,6 +64,7 @@ function App() {
         <Route path='/contactus' element = {<ContactPage />}/>
         <Route path='/mycart' element = {<CartPage />}/>
         <Route path='/account' element = {<AccountPage/>}/>
+        <Route path='/customer-orders' element = {<CustomerOrdersPage/>}/>
 
 
         {/* route for the Admin side*/}

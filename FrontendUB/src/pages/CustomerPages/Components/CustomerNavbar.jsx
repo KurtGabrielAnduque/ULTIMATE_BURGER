@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, ClipboardCheck } from 'lucide-react';
 
 import UBLOGO from '../../../assets/images/UBLOGO.jpg';
 
@@ -91,7 +91,23 @@ export default function CustomerNavbar() {
               <ShoppingCart size={24} />
               {/* Badge border matches the dark background */}
               <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-zinc-950">
-                2
+                3
+              </span>
+            </Link>
+
+
+            <Link 
+              to='/customer-orders'
+              className={`relative p-2 rounded-full transition-colors ${
+                isActive('/customer-orders') 
+                  ? 'bg-red-500/20 text-red-400' 
+                  : 'text-zinc-400 hover:bg-zinc-800 hover:text-white'
+              }`}
+            >
+              <ClipboardCheck size={24} />
+              {/* Badge border matches the dark background */}
+              <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-zinc-950">
+                3
               </span>
             </Link>
 
