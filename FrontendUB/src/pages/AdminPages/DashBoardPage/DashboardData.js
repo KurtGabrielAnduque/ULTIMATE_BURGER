@@ -344,7 +344,7 @@ export const CustomerOrder = [{
     customerId: "user_98765", 
     customerName: "Kurt Gabriel Anduque",
     contactNumber: "09687929730",
-    orderStatus: 'Completed', // 'Pending' | 'Preparing' | 'Ready' | 'Completed'
+    orderStatus: 'Preparing', // 'Pending' | 'Preparing' | 'Ready' | 'Completed'
     paymentStatus: 'Paid', // 'Paid' | 'Unpaid'
     paymentMethod: 'gcash',
     orderService: 'take-out',
@@ -429,7 +429,7 @@ export const CustomerOrder = [{
     customerId: "user_98765", 
     customerName: "Kurt Gabriel Anduque",
     contactNumber: "09687929730",
-    orderStatus: 'Completed', // 'Pending' | 'Preparing' | 'Ready' | 'Completed'
+    orderStatus: 'Ready', // 'Pending' | 'Preparing' | 'Ready' | 'Completed'
     paymentStatus: 'Paid', // 'Paid' | 'Unpaid'
     paymentMethod: 'gcash',
     orderService: 'take-out',

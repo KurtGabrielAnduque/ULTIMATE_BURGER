@@ -26,6 +26,9 @@ function OrderHistoryPage() {
               <div className="h-[400px] bg-white rounded-2xl border border-zinc-200 shadow-sm flex items-center justify-center text-slate-400 font-medium">
                 Completed Orders List Component will go here!
               </div>
+              <div className="h-[400px] bg-white rounded-2xl border border-zinc-200 shadow-sm flex items-center justify-center text-slate-400 font-medium">
+                Completed Orders List Component will go here!
+              </div>
             </div>
 
         </main>
