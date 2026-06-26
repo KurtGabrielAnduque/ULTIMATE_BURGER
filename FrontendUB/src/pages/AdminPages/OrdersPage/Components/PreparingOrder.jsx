@@ -30,7 +30,7 @@ function PreparingOrder({ PrepairingOrders, formatTime }) {
                         </div>
                         <div>
                             <p className="font-bold text-slate-900">{pesoFormatter.format(order.orderTotal)}</p>
-                            <p className={`text-xs font-bold ${order.paymentStatus === 'Paid' ? 'text-blue-600' : 'text-red-500'}`}>
+                            <p className={`text-xs font-bold ${order.paymentStatus === 'Paid' ? 'text-green-600' : 'text-red-500'}`}>
                                 {order.paymentStatus} ({order.paymentMethod.toUpperCase()})
                             </p>
                         </div>

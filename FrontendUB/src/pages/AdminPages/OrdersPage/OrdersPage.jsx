@@ -45,7 +45,7 @@ function OrdersPage() {
               <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-6 border-b border-orange-200 flex justify-between items-center shrink-0">
                 <div>
                   <h2 className="text-orange-600 text-xl font-bold flex items-center gap-2">
-                    <Clock size={24} /> Pending & Preparing ({pendingOrders.length})
+                    <Clock size={24} /> Pending Orders ({pendingOrders.length})
                   </h2>
                   <p className="text-zinc-600 font-medium text-sm mt-1">
                     Orders that need to be cooked.
@@ -74,7 +74,7 @@ function OrdersPage() {
               <div className="bg-gradient-to-r from-blue-50 to-blue-50 p-6 border-b border-blue-200 flex justify-between items-center shrink-0">
                 <div>
                   <h2 className="text-blue-600 text-xl font-bold flex items-center gap-2">
-                    <ChefHat size={24} /> Pending & Preparing ({pendingOrders.length})
+                    <ChefHat size={24} /> Preparing Orders ({pendingOrders.length})
                   </h2>
                   <p className="text-zinc-600 font-medium text-sm mt-1">
                     Orders that need to be cooked.
