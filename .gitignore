@@ -1,0 +1,21 @@
+# =========================
+# DJANGO BACKEND
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+Ultimate_Backend/.env
+Ultimate_Backend/media/
+Ultimate_Backend/staticfiles/
+
+# =========================
+# CONDA & ENVIRONMENTS
+# =========================
+.env
+.venv/
+env/
+venv/
+*.swp
+.DS_Store
