@@ -19,7 +19,7 @@ class AddOn(models.Model):
     def __str__(self):
         return f'{self.name}'
     
-    
+
 class Product(models.Model):
     # Create a selection for category
     CATEGORIES_CHOICES = [
@@ -72,3 +72,7 @@ class Flavor(models.Model):
         return f'{self.name}'
 
 
+
+class Sauce(models.Model):
+    addon = models.ForeignKey(AddOn, on_delete=models.CASCADE, related_name='sauces')
+    name = models.CharField(max_length=100)
