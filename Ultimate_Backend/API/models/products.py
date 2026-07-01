@@ -76,3 +76,6 @@ class Flavor(models.Model):
 class Sauce(models.Model):
     addon = models.ForeignKey(AddOn, on_delete=models.CASCADE, related_name='sauces')
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

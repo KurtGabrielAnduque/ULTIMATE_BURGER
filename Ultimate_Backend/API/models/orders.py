@@ -1,5 +1,5 @@
 from django.db import models
-from .customer import Customer
+from .users import User
 from .products import Product
 
 class Order(models.Model):
@@ -19,7 +19,7 @@ class Order(models.Model):
     # base on number of digits of current number add front zero to complete the 5 digits receipt and make it string
     # the 'ORD-' + 'string id number'.
     order_number = models.CharField(max_length=20, unique=True, editable=False) 
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='orders')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     order_service = models.CharField(max_length=100, choices=SERVICE_CHOICES)
     order_total = models.DecimalField(max_digits=8, decimal_places=2)
     order_status = models.CharField(max_length=100, choices=STATUS_CHOICES, default='Pending')

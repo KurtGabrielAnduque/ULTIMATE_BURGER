@@ -1,5 +1,5 @@
 from .cart import *
-from .customer import *
+from .users import *
 from .orders import *
 from .products import *
 from .reviews import *
