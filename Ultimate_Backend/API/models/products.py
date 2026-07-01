@@ -7,11 +7,19 @@ class Drink(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class AddOn(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
+
+    def __str__(self):
+        return f'{self.name}'
+    
+    
 class Product(models.Model):
     # Create a selection for category
     CATEGORIES_CHOICES = [
@@ -40,6 +48,9 @@ class Product(models.Model):
     addons = models.ManyToManyField(AddOn, blank=True)
     drinks = models.ManyToManyField(Drink, blank=True)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 # Start with one to many which is the Fries flavor and pizza sizes
 class Size(models.Model):
@@ -48,10 +59,16 @@ class Size(models.Model):
     name = models.CharField(max_length=100)
     additional_price = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def __str__(self):
+        return f'{self.name}'
+
 class Flavor(models.Model):
     # if product delete
     product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name='flavors')
     name = models.CharField(max_length=100)
     additional_price = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
