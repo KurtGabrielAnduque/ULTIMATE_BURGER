@@ -39,10 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # import the api app here
     'api',
-    'rest_framework'
+    'rest_framework',
+    "corsheaders", # for cors header inorder to django to allow react port
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware", # for cors header inorder to django to allow react port
+    "django.middleware.security.SecurityMiddleware", # for cors header inorder to django to allow react port
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -118,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# when we are using cors we should place the local host port here
+# in order to allow only specific port which is the local host that we are using
+# in react
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]

@@ -3,6 +3,9 @@ import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+
+import axios from 'axios'
+
 import './App.css'
 
 // Import the Pages for customer side
@@ -41,11 +44,11 @@ import LoginPage from './pages/Components/LoginPage'
 
 // this is just the illustration of how the guard will work
 // this will become real when we start doing the backend part
-function AdminNavigator({ children }){
+function AdminNavigator({ children }) {
   let isAdmin = true
 
-  if  (!isAdmin){
-    return <Navigate to = '/' replace/>
+  if (!isAdmin) {
+    return <Navigate to='/' replace />
   }
 
   return children
@@ -54,66 +57,88 @@ function AdminNavigator({ children }){
 
 // main app here
 function App() {
-  return(
+  const [products, setProducts] = useState([]);
+
+
+  // fetch the general menu data
+
+  useEffect(() => {
+    const productsData = async () => {
+      try {
+        let response = await axios.get('http://127.0.0.1:8000/products/');
+        setProducts(response.data);
+        console.log(response.data);
+        console.log(Array.isArray(response.data));
+
+      } catch (error) {
+        console.log(`Error Fetching Data: ${error}`)
+      }
+
+    }
+
+    productsData();
+  }, [])
+
+  return (
     <>
-      
+
       <Routes>
         {/* router for the  Customers*/}
-        <Route index element = {<HomePage />}/>
-        <Route path='/menu' element = {<MenuPage/>}/>
-        <Route path='/location' element = {<LocationPage />}/>
-        <Route path='/review' element = {<ReviewPage />}/>
-        <Route path='/contactus' element = {<ContactPage />}/>
-        <Route path='/mycart' element = {<CartPage />}/>
-        <Route path='/account' element = {<AccountPage/>}/>
-        <Route path='/customer-orders' element = {<CustomerOrdersPage/>}/>
+        <Route index element={<HomePage />} />
+        <Route path='/menu' element={<MenuPage products={products} />} />
+        <Route path='/location' element={<LocationPage />} />
+        <Route path='/review' element={<ReviewPage />} />
+        <Route path='/contactus' element={<ContactPage />} />
+        <Route path='/mycart' element={<CartPage />} />
+        <Route path='/account' element={<AccountPage />} />
+        <Route path='/customer-orders' element={<CustomerOrdersPage />} />
 
-        <Route path='/login-signup' element = {<LoginPage/>}/>
+        <Route path='/login-signup' element={<LoginPage />} />
 
 
         {/* route for the Admin side*/}
-        <Route path='/admin/dashboard' element = {
+        <Route path='/admin/dashboard' element={
           <AdminNavigator>
-            <DashBoardPage/>
+            <DashBoardPage />
           </AdminNavigator>
-        }/>
+        } />
 
-        <Route path='/admin/orders' element = {
+        <Route path='/admin/orders' element={
           <AdminNavigator>
-            <OrdersPage/>
+            <OrdersPage />
           </AdminNavigator>
-        }/>
+        } />
 
-        <Route path='/admin/inventory' element = {
+        <Route path='/admin/inventory' element={
           <AdminNavigator>
-            <InventoryPage/>
+            <InventoryPage />
           </AdminNavigator>
-        }/>
+        } />
 
-        <Route path='/admin/orderhistory' element = {
+        <Route path='/admin/orderhistory' element={
           <AdminNavigator>
-            <OrderHistoryPage/>
+            <OrderHistoryPage />
           </AdminNavigator>
-        }/>
+        } />
 
-        <Route path='/admin/managemenu' element = {
+        <Route path='/admin/managemenu' element={
           <AdminNavigator>
-            <ManageMenuPage/>
+            <ManageMenuPage />
           </AdminNavigator>
-        }/>
+        } />
 
-        <Route path='/admin/store' element = {
+        <Route path='/admin/store' element={
           <AdminNavigator>
-            <StorePage/>
+            <StorePage />
           </AdminNavigator>
-        }/>
+        } />
 
 
         {/* catcher if the user type a url that doesnt even exist*/}
-        <Route path='*' element = {<Navigate to = '/' replace/>}/>
+        <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
-       
-      
+
+
     </>
   );
 }

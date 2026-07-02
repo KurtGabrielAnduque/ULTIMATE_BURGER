@@ -67,7 +67,7 @@ class Size(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.product.name} {self.name}'
 
 class Flavor(models.Model):
     # if product delete

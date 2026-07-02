@@ -1,4 +1,5 @@
 import React from 'react'
+import { pesoFormatter } from '../../../../utils/ProjectUtilities';
 
 function BurgerCard({ product, onOpenModal }) {
   return (
@@ -12,13 +13,13 @@ function BurgerCard({ product, onOpenModal }) {
         <h2 className="text-xl font-extrabold text-slate-900 mb-1">{product.name}</h2>
 
         <div className="flex items-center gap-1 mb-3">
-          <span className="text-yellow-400 text-sm">{'★'.repeat(product.rating?.stars || 5)}</span>
+          <span className="text-yellow-400 text-sm">{'★'.repeat(product?.rating_stars || 5)}</span>
           <span className="text-xs text-slate-500 font-medium tracking-wide">
-            ({product.rating?.count?.toLocaleString() || 0} reviews)
+            ({product.rating_count?.toLocaleString() || 0} reviews)
           </span>
         </div>
 
-        <p className="text-red-500 font-bold text-lg mb-6 mt-auto">₱{product.price?.toFixed(2)}</p>
+        <p className="text-red-500 font-bold text-lg mb-6 mt-auto">{pesoFormatter.format(product.base_price)}</p>
 
         {/* When clicked, tell the parent (MenuPage) to open this product */}
         <button

@@ -6,7 +6,7 @@ import BurgerCard from './Components/BurgerCard';
 import Modal from './Components/Modal';
 
 // The Main Menu Page
-export default function MenuPage() {
+export default function MenuPage({ products }) {
   // STATE LIFTED UP: MenuPage now controls which product is active in the modal
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [cart, setCart] = useState([]);
@@ -23,7 +23,7 @@ export default function MenuPage() {
           <h2 className="text-4xl sm:text-6xl font-extrabold text-orange-600 mb-4 text-center">Burgers</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
-          {menuData.filter(item => item.category === 'burger').map((item) => (
+          {products.filter(item => item.category === 'burger').map((item) => (
             /* Pass the state updater down as a prop */
             <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
@@ -34,7 +34,7 @@ export default function MenuPage() {
           <h2 className="text-4xl sm:text-6xl font-extrabold text-orange-600 mb-4 text-center">Sides</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {menuData.filter(item => item.category === 'sides').map((item) => (
+          {products.filter(item => item.category === 'sides').map((item) => (
             /* Pass the state updater down as a prop */
             <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
@@ -46,7 +46,7 @@ export default function MenuPage() {
           <h2 className="text-4xl sm:text-6xl font-extrabold text-orange-600 mb-4 text-center">Pizza</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {menuData.filter(item => item.category === 'pizza').map((item) => (
+          {products.filter(item => item.category === 'pizza').map((item) => (
             /* Pass the state updater down as a prop */
             <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
@@ -57,7 +57,7 @@ export default function MenuPage() {
           <h2 className="text-4xl sm:text-6xl font-extrabold text-orange-600 mb-4 text-center">Pizza Burger</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {menuData.filter(item => item.category === 'pizzaBurger').map((item) => (
+          {products.filter(item => item.category === 'pizzaBurger').map((item) => (
             /* Pass the state updater down as a prop */
             <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
@@ -68,7 +68,7 @@ export default function MenuPage() {
           <h2 className="text-4xl sm:text-6xl font-extrabold text-orange-600 mb-4 text-center">2 in 1 Flavor Pizza Burger</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {menuData.filter(item => item.category === 'pizzaBurger2in1').map((item) => (
+          {products.filter(item => item.category === 'pizzaBurger2in1').map((item) => (
             /* Pass the state updater down as a prop */
             <BurgerCard key={item.productId} product={item} onOpenModal={setSelectedProduct} />
           ))}
