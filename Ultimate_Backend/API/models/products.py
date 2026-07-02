@@ -3,10 +3,16 @@ from django.db import models
 # many to many
 # drinks and AddOns
 # we will insert it to PRODUCT AS MANY TO MANY
+class Sauce(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Drink(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
-
+    
     def __str__(self):
         return f'{self.name}'
 
@@ -14,11 +20,12 @@ class Drink(models.Model):
 class AddOn(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=8, decimal_places=2)
-
+    sauces = models.ManyToManyField(Sauce, blank = True)
 
     def __str__(self):
         return f'{self.name}'
-    
+
+
 
 class Product(models.Model):
     # Create a selection for category
@@ -57,7 +64,7 @@ class Size(models.Model):
     # IF THE PRODUCT DELETE OFCOURSE IT SIZE ALSO DELETE
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='sizes')
     name = models.CharField(max_length=100)
-    additional_price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f'{self.name}'
@@ -66,16 +73,9 @@ class Flavor(models.Model):
     # if product delete
     product = models.ForeignKey(Product,on_delete=models.CASCADE, related_name='flavors')
     name = models.CharField(max_length=100)
-    additional_price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f'{self.name}'
 
 
-
-class Sauce(models.Model):
-    addon = models.ForeignKey(AddOn, on_delete=models.CASCADE, related_name='sauces')
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name

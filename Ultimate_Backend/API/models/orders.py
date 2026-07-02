@@ -27,7 +27,7 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.order_number
+        return f'{self.order_number} {self.user.first_name} {self.user.last_name}'
 
 class Payment(models.Model):
 
