@@ -1,8 +1,9 @@
 from django.urls import path
-from . import views
-
+# 1. Import the 'products' module from the 'views' folder
+from .views import products 
 
 urlpatterns = [
-    path('products/', views.product_list),
-    path('products/<int:id>/', views.product_list_details)
+    # 2. Call the functions using products.function_name
+    path('products/', products.product_list),
+    path('products/<int:id>/', products.product_detail)
 ]
