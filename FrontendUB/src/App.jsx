@@ -67,8 +67,6 @@ function App() {
       try {
         let response = await axios.get('http://127.0.0.1:8000/products/');
         setProducts(response.data);
-        console.log(response.data);
-        console.log(Array.isArray(response.data));
 
       } catch (error) {
         console.log(`Error Fetching Data: ${error}`)

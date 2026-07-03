@@ -9,27 +9,39 @@ function Modal({ closeModal, product }) {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedFlavor, setSelectedFlavor] = useState(null);
 
-  // NEW: Track Quantity
+  // Track Quantity
   const [quantity, setQuantity] = useState(1);
 
   // Track multiple add-ons and drinks
   const [selectedAddOns, setSelectedAddOns] = useState({});
   const [selectedDrinks, setSelectedDrinks] = useState({});
-  
-  //===========================
-  // to add the selection of sauce useState
-  //=======================
 
+  // to add the selection of sauce useState
+  const [selectedSauce, setSelectedSauce] = useState([]);
+
+  // A api call for get of the product detail
   useEffect(() => {
     const fetchDetailedProduct = async () => {
       try {
         let response = await axios.get(`http://127.0.0.1:8000/products/${product.id}`);
         const data = response.data
         setDetailedProduct(response.data);
-
+        console.log(data);
         // Set default selections AFTER data is fetched
         if (data.sizes && data.sizes.length > 0) setSelectedSize(data.sizes[0].id);
         if (data.flavors && data.flavors.length > 0) setSelectedFlavor(data.flavors[0].id);
+
+        // auto set a default in the sauce
+        if (data.addons) {
+          const defaultSauce = {}
+          data.addons.forEach((addon) => {
+            // if the specific product has an addon of sauce available
+            if (addon.sauces && addon.sauces.length > 0) {
+              defaultSauce[addon.id] = addon.sauces[0].id;
+            }
+          });
+          setSelectedSauce(defaultSauce);
+        }
 
       } catch (error) {
         console.log(`Error Fetching Data: ${error}`)
@@ -40,7 +52,7 @@ function Modal({ closeModal, product }) {
     fetchDetailedProduct();
   }, [product.id])
 
-  
+
   // Toggle helper for checkboxes
   const toggleAddOn = (id) => {
     setSelectedAddOns(prev => ({ ...prev, [id]: !prev[id] }));
@@ -49,29 +61,88 @@ function Modal({ closeModal, product }) {
     setSelectedDrinks(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
+
+  const toggleSauce = (addonID, sauceID) => {
+    setSelectedSauce(prev => ({ ...prev, [addonID]: sauceID }))
+  }
+
   // Dynamic Price Calculation for ONE single item
   let singleItemTotal = parseFloat(detailedProduct.base_price || 0);
 
   if (selectedSize && detailedProduct.sizes) {
     const sizeData = detailedProduct.sizes.find(s => s.id === selectedSize);
-    if (sizeData) singleItemTotal = sizeData.price;
+    if (sizeData) singleItemTotal = parseFloat(sizeData.price);
   }
 
   if (selectedFlavor && detailedProduct.flavors) {
     const flavorData = detailedProduct.flavors.find(f => f.id === selectedFlavor);
-    if (flavorData && flavorData.price) singleItemTotal += flavorData.price;
+    if (flavorData && flavorData.price) singleItemTotal += parseFloat(flavorData.price);
   }
 
   detailedProduct.addons?.forEach(addon => {
-    if (selectedAddOns[addon.id]) singleItemTotal += addon.price;
+    if (selectedAddOns[addon.id]) singleItemTotal += parseFloat(addon.price);
   });
 
   detailedProduct.drinks?.forEach(drink => {
-    if (selectedDrinks[drink.id]) singleItemTotal += drink.price;
+    if (selectedDrinks[drink.id]) singleItemTotal += parseFloat(drink.price);
   });
 
   // NEW: Final Total is the single item multiplied by quantity
   const currentTotal = singleItemTotal * quantity;
+
+
+
+
+  // formation of the payload after user press add to cart
+  const addToCart = () => {
+    
+    const formattedAddOns = (detailedProduct.addons || []) //check if there is an addons first
+      .filter(addon => selectedAddOns[addon.id]) // filter the ids that are only exist in selectectAddOns
+      .map(addon => {
+        const addonPayLoad = {
+          addonId: parseInt(addon.id) // get the id only
+        }
+
+        if (addon.sauces && addon.sauces?.length > 0 && selectedSauce[addon.id]) { // if the addon in addons have sauces and its length is above 0 and there is a existing addon selected in selected Addons
+          const chosenSauce = addon.sauces.find(x => x.id === selectedSauce[addon.id]) // find sauce id that is similar to the checked id in radio button
+          if (chosenSauce) {
+            addonPayLoad.sauces = [chosenSauce.id];
+          }
+        }
+
+        return addonPayLoad
+      });
+
+    const formattedDrinks = (detailedProduct.drinks || [])
+      .filter(drink => selectedDrinks[drink.id])
+      .map(drink => {
+        const drinkPayLoad = {
+          drinkId: parseInt(drink.id)
+        }
+
+        return drinkPayLoad
+      });
+
+
+
+    const payload = {
+      product: detailedProduct.id,
+      user: 1, //proxy since we havent start setting up the user serializers
+      quantity: quantity,
+      selections: {
+        flavor: selectedFlavor,
+        size: selectedSize,
+        addons: formattedAddOns,
+        drinks: formattedDrinks
+      }
+    };
+
+    console.log("Here is the final payload:", JSON.stringify(payload, null, 2))
+
+    closeModal();
+  }
+
+
 
   return (
     <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm">
@@ -98,8 +169,8 @@ function Modal({ closeModal, product }) {
             <div className="flex items-center gap-2 mb-4">
               <span className="bg-red-100 text-red-600 font-bold px-3 py-1 rounded-full text-sm">
                 Price: {pesoFormatter.format(detailedProduct.base_price)}
-              </span>
-              <span className="text-yellow-400 text-sm">{'★'.repeat(detailedProduct.rating_stars || 5)}</span>
+              </span>                                       {/*since our model holds a decimal number*/}
+              <span className="text-yellow-400 text-sm">{"★".repeat(Math.floor(Number(detailedProduct.rating_stars || 0)))}</span>
               <span className="text-xs text-slate-500 font-medium">({detailedProduct.rating_count?.toLocaleString() || 0} reviews)</span>
             </div>
 
@@ -109,7 +180,7 @@ function Modal({ closeModal, product }) {
             <div className="space-y-8">
 
               {/* SIZES */}
-              {detailedProduct.sizes && (
+              {detailedProduct.sizes?.length > 0 && (
                 <div>
                   <h3 className="font-bold text-slate-900 mb-3">Select Size</h3>
                   <div className="flex flex-wrap gap-3">
@@ -130,7 +201,7 @@ function Modal({ closeModal, product }) {
               )}
 
               {/* FLAVORS */}
-              {detailedProduct.flavors && (
+              {detailedProduct.flavors?.length > 0 && (
                 <div>
                   <h3 className="font-bold text-slate-900 mb-3">Select Flavor</h3>
                   <div className="flex flex-wrap gap-3">
@@ -161,7 +232,7 @@ function Modal({ closeModal, product }) {
                           <div className="flex items-center gap-3">
                             <input
                               type="checkbox"
-                              checked={!!selectedAddOns[addon.id]}
+                              checked={!!selectedAddOns[addon.id]} // double flip since the initial mapping will make the selectedAddons undefined and we need to avoid it
                               onChange={() => toggleAddOn(addon.id)}
                               className="w-5 h-5 text-red-500 rounded border-slate-300 focus:ring-red-500"
                             />
@@ -170,12 +241,18 @@ function Modal({ closeModal, product }) {
                           <span className="text-slate-500 font-medium">+{pesoFormatter.format(addon.price)}</span>
                         </label>
 
-                        {addon.sauces && selectedAddOns[addon.id] && (
+                        {addon.sauces?.length > 0 && selectedAddOns[addon.id] && (
                           <div className="ml-10 mt-2 space-y-2 p-3 bg-slate-50 rounded-lg border border-slate-100">
                             <p className="text-xs font-bold text-slate-500 uppercase">Choose your sauce:</p>
                             {addon.sauces.map((sauce) => (
                               <label key={sauce.id} className="flex items-center gap-2 text-sm text-slate-700 cursor-pointer">
-                                <input type="radio" name={`sauce-${addon.id}`} className="text-red-500 focus:ring-red-500" defaultChecked={sauce.id === addon.sauces[0].id} />
+                                <input
+                                  type="radio"
+                                  name={`sauce-${addon.id}`}
+                                  className="text-red-500 focus:ring-red-500"
+                                  checked={selectedSauce[addon.id] === sauce.id}
+                                  onChange={() => toggleSauce(addon.id, sauce.id)}
+                                />
                                 {sauce.name}
                               </label>
                             ))}
@@ -250,10 +327,7 @@ function Modal({ closeModal, product }) {
               </button>
 
               <button
-                onClick={() => {
-                  alert(`Added ${quantity}x to cart logic coming soon!`);
-                  closeModal();
-                }}
+                onClick={addToCart}
                 className="w-2/3 bg-red-500 text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-1 transition-all duration-300"
               >
                 Add to Cart
