@@ -10,13 +10,13 @@ import ImageSlider from "./Components/ImageSlider";
 
 
 
-function ReviewPage() {
+function ReviewPage({ cartData }) {
   
   return (
     <div className="bg-zinc-950 min-h-screen flex flex-col">
       
       {/* Import the Header here*/}
-      <CustomerNavbar />
+      <CustomerNavbar  cartData={cartData} />
 
       <main className="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
 

@@ -58,38 +58,82 @@ function AdminNavigator({ children }) {
 // main app here
 function App() {
   const [products, setProducts] = useState([]);
+  const [cartData, setCart] = useState([]);
+
+  const loadCart = async () => {
+    try {
+      let responseCart = await axios.get('http://127.0.0.1:8000/cart/user/1/');
+      setCart(responseCart.data);
+    } catch (error) {
+      console.log(`Error Fetching Data: ${error}`)
+    }
+  }
+
 
 
   // fetch the general menu data
+  const productsData = async () => {
+    try {
+      let response = await axios.get('http://127.0.0.1:8000/products/');
+      setProducts(response.data);
 
-  useEffect(() => {
-    const productsData = async () => {
-      try {
-        let response = await axios.get('http://127.0.0.1:8000/products/');
-        setProducts(response.data);
-
-      } catch (error) {
-        console.log(`Error Fetching Data: ${error}`)
-      }
-
+    } catch (error) {
+      console.log(`Error Fetching Data: ${error}`)
     }
 
+  }
+
+
+  useEffect(() => {
     productsData();
+    loadCart();
   }, [])
 
   return (
     <>
 
       <Routes>
-        {/* router for the  Customers*/}
-        <Route index element={<HomePage />} />
-        <Route path='/menu' element={<MenuPage products={products} />} />
-        <Route path='/location' element={<LocationPage />} />
-        <Route path='/review' element={<ReviewPage />} />
-        <Route path='/contactus' element={<ContactPage />} />
-        <Route path='/mycart' element={<CartPage />} />
-        <Route path='/account' element={<AccountPage />} />
-        <Route path='/customer-orders' element={<CustomerOrdersPage />} />
+        {/* Home Page*/}
+        <Route index element={<HomePage
+          cartData={cartData}
+        />} />
+        
+        {/*Menu Page*/}
+        <Route path='/menu' element={<MenuPage
+          products={products}
+          loadCart={loadCart}
+          cartData={cartData}
+        />} />
+
+        {/*Location Page*/}
+        <Route path='/location' element={<LocationPage
+          cartData={cartData}
+        />} />
+
+        {/*Review Page*/}
+        <Route path='/review' element={<ReviewPage
+          cartData={cartData}
+        />} />
+
+        {/*Contact Page*/}
+        <Route path='/contactus' element={<ContactPage
+          cartData={cartData}
+        />} />
+
+        {/*Cart Page*/}
+        <Route path='/mycart' element={<CartPage
+          cartData={cartData}
+        />} />
+
+        {/*Account Page*/}
+        <Route path='/account' element={<AccountPage
+          cartData={cartData}
+        />} />
+
+        {/*Order Page for customers*/}
+        <Route path='/customer-orders' element={<CustomerOrdersPage
+          cartData={cartData}
+        />} />
 
         <Route path='/login-signup' element={<LoginPage />} />
 

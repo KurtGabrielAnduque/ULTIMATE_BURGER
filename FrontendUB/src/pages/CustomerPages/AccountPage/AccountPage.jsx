@@ -9,7 +9,7 @@ import UserDetails from './Components/UserDetails'
 
 
 
-function AccountPage() {
+function AccountPage({ cartData }) {
   const [userEdit, setUserEdit] = useState(false);
 
   const sampleData = [{
@@ -33,7 +33,7 @@ function AccountPage() {
 
     <div className='bg-zinc-950 flex flex-col min-h-screen font-sans'>
       {/*Import Navigation Bar*/}
-      <CustomerNavbar />
+      <CustomerNavbar cartData={cartData}/>
 
       <div className='max-w-7xl mx-auto px-4 py-12 md:py-20 flex-grow w-full'>
 

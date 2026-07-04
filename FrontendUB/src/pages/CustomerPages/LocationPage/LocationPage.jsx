@@ -7,12 +7,12 @@ import Footer from '../Components/Footer'
 import MAINUB from '../../../assets/images/UB-main-branch.png'
 import SecondUB from '../../../assets/images/UB-payatas-branch.png'
 
-function LocationPage() {
+function LocationPage({ cartData }) {
   return (
     <>
       <div className='bg-zinc-950 min-h-screen flex flex-col w-full'>
         {/* Import the Header here*/}
-        <CustomerNavbar />
+        <CustomerNavbar cartData={cartData}/>
 
         <div className='max-w-7xl mx-auto px-4 py-6 flex-grow w-full'>
           <div className='flex flex-col justify-center'>

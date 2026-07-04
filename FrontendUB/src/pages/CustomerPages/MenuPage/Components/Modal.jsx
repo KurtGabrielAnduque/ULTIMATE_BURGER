@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { pesoFormatter } from '../../../../utils/ProjectUtilities';
 import axios from 'axios';
 
-function Modal({ closeModal, product }) {
+function Modal({ product, closeModal, loadCart }) {
   const [detailedProduct, setDetailedProduct] = useState({});
   // Local State for Selections
   const [selectedSize, setSelectedSize] = useState(null);
@@ -94,8 +94,8 @@ function Modal({ closeModal, product }) {
 
 
   // formation of the payload after user press add to cart
-  const addToCart = () => {
-    
+  const payLoadFormat = () => {
+
     const formattedAddOns = (detailedProduct.addons || []) //check if there is an addons first
       .filter(addon => selectedAddOns[addon.id]) // filter the ids that are only exist in selectectAddOns
       .map(addon => {
@@ -137,11 +137,22 @@ function Modal({ closeModal, product }) {
       }
     };
 
-    console.log("Here is the final payload:", JSON.stringify(payload, null, 2))
+
+
+    return payload
+  }
+
+  const addToCart = async () => {
+    const payload = payLoadFormat();
+
+    // create a post method
+    await axios.post('http://127.0.0.1:8000/cart/', payload);
+
+    // reload the cart to header update
+    await loadCart();
 
     closeModal();
   }
-
 
 
   return (

@@ -2,6 +2,7 @@ from rest_framework import serializers
 from api.models import Product, Sauce, Drink, AddOn, Size, Flavor
 from api.models import Cart
 from api.models import User
+from .products import ProductListSerializer
 from decimal import Decimal
 
 
@@ -30,12 +31,13 @@ class AddToCartSerializer(serializers.ModelSerializer):
 
     selections = SelectionSerializer()
     product = serializers.PrimaryKeyRelatedField(queryset = Product.objects.all())
-    # user = serializer.PrimaryKeyRelatedField(queryset = User.object.all())
+    # user = serializers.PrimaryKeyRelatedField(queryset = User.object.all())
+    user = serializers.PrimaryKeyRelatedField(queryset = User.objects.all())
 
     class Meta:
         model = Cart
         fields = ['product','user','quantity','selections']
-
+        read_only_fields = ['total_price']
 
     def validate_quantity(self, quantity):
         if quantity <= 0:
@@ -113,6 +115,8 @@ class AddToCartSerializer(serializers.ModelSerializer):
 
     # create the save function
     def create(self, validated_data):
+        # just an experiment
+        user = validated_data.get('user')
         product = validated_data.get('product')
         quantity = validated_data.get('quantity')
         selections = validated_data.get('selections',{})
@@ -137,7 +141,7 @@ class AddToCartSerializer(serializers.ModelSerializer):
         
         final_price = total * quantity
 
-
+        print(selections)
         # convert back to json field but now we must use the validated data
         selection_json = {
             "flavor": (
@@ -151,6 +155,7 @@ class AddToCartSerializer(serializers.ModelSerializer):
             ),
 
             "addons": [
+                
                 {
                     "addonId": addon["addonId"].id,
                     "sauces": [
@@ -168,11 +173,11 @@ class AddToCartSerializer(serializers.ModelSerializer):
                 for drink in selected_drinks
             ]
         }
-
+        print(selection_json)
         # save to cart
         cart_item = Cart.objects.create(
             product = product,
-            #user = 
+            user = user,
             selections = selection_json,
             quantity = quantity,
             total_price = final_price
@@ -180,3 +185,11 @@ class AddToCartSerializer(serializers.ModelSerializer):
 
 
         return cart_item
+
+# for get only
+class CartSerializer(serializers.ModelSerializer):
+    product = ProductListSerializer(read_only = True)
+
+    class Meta:
+        model = Cart
+        fields = ['id','product','user','quantity','selections','total_price']

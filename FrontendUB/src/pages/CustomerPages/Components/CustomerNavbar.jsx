@@ -1,10 +1,20 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { data, Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, User, Menu, X, ClipboardCheck } from 'lucide-react';
 
 import UBLOGO from '../../../assets/images/UBLOGO.jpg';
 
-export default function CustomerNavbar() {
+export default function CustomerNavbar({ cartData }) {
+  let quantity = 0;
+
+  // compute the overall quantity that still remains in the user cart
+  cartData.forEach(product => {
+    quantity += product.quantity;
+  });
+
+
+
+  
   // State to handle the mobile menu opening and closing
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
@@ -91,7 +101,7 @@ export default function CustomerNavbar() {
               <ShoppingCart size={24} />
               {/* Badge border matches the dark background */}
               <span className="absolute top-0 right-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-zinc-950">
-                3
+                {quantity}
               </span>
             </Link>
 

@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 
 
-function CustomerOrdersPage() {
+function CustomerOrdersPage({ cartData }) {
   const [activeTab, setActiveTab] = useState('active'); // 'active' | 'history'
 
   // Filter orders based on the active tab
@@ -28,7 +28,7 @@ function CustomerOrdersPage() {
     <div className='bg-zinc-950 min-h-screen flex flex-col w-full font-sans'>
 
       {/* Import the Customer Navbar*/}
-      <CustomerNavbar />
+      <CustomerNavbar cartData={cartData}/>
 
       <div className='max-w-4xl mx-auto px-4 py-12 flex-grow w-full'>
 

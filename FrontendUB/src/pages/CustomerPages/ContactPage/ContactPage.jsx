@@ -3,12 +3,12 @@ import CustomerNavbar from '../Components/CustomerNavbar'
 import Footer from '../Components/Footer'
 import { MapPin, Phone, Mail, Send } from 'lucide-react';
 
-function ContactPage() {
+function ContactPage({cartData}) {
   return (
     <div className='bg-zinc-950 flex flex-col min-h-screen font-sans'>
 
       {/* Import the Header */}
-      <CustomerNavbar />
+      <CustomerNavbar cartData={cartData}/>
 
       <div className='max-w-7xl mx-auto px-4 py-12 md:py-20 flex-grow w-full'>
 

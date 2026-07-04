@@ -12,12 +12,12 @@ import Footer from '../Components/Footer';
 
 
 
-export default function HomePage() {
+export default function HomePage({ cartData }) {
   return (
     <>
       {/* Navigation Bar */}
       {/* NOTE: If you already put CustomerNavbar in App.jsx, you can remove it from here to avoid showing two navbars! */}
-      <CustomerNavbar />
+      <CustomerNavbar cartData={cartData} />
 
       <div className="bg-zinc-50 font-sans min-h-[calc(100vh-80px)] flex flex-col w-full">
 

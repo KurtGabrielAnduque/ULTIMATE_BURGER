@@ -13,7 +13,7 @@ import { userCartDataExpanded } from './UserCart';
 
 
 
-function CartPage() {
+function CartPage({ cartData }) {
 
   const [cartItems, setCartItems] = useState(userCartDataExpanded);
   const [serviceMode, setServiceMode] = useState('dine-in'); // 'dine-in' | 'take-out'
@@ -33,7 +33,7 @@ function CartPage() {
     <>
       <div className='bg-zinc-950 min-h-screen flex flex-col w-full'>
         {/* Import the Navbar Here */}
-        <CustomerNavbar />
+        <CustomerNavbar cartData={cartData}/>
 
         <div className='max-w-7xl mx-auto px-4 py-12 flex-grow w-full'>
           <h1 className="text-white text-[36px] md:text-[6vw] xl:text-[3.5vw] 2xl:text-[3.5vw] mb-4 md:mb-8 leading-[1.2] text-center text-balance border-b-1 py-8 ">

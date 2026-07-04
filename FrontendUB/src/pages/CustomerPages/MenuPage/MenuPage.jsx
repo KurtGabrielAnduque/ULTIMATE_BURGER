@@ -6,14 +6,13 @@ import BurgerCard from './Components/BurgerCard';
 import Modal from './Components/Modal';
 
 // The Main Menu Page
-export default function MenuPage({ products }) {
+export default function MenuPage({ products, loadCart, cartData }) {
   // STATE LIFTED UP: MenuPage now controls which product is active in the modal
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [cart, setCart] = useState([]);
 
   return (
     <div className="bg-slate-50 min-h-screen">
-      <CustomerNavbar />
+      <CustomerNavbar cartData = {cartData}/>
 
       <div className="max-w-7xl mx-auto px-4 py-12">
         <h1 className="text-6xl font-extrabold text-slate-900 mb-8 text-center sm:text-left">Our Menu</h1>
@@ -85,6 +84,7 @@ export default function MenuPage({ products }) {
         <Modal
           product={selectedProduct}
           closeModal={() => setSelectedProduct(null)}
+          loadCart={loadCart}
         />
       )}
 
