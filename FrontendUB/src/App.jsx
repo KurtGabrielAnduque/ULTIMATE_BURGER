@@ -97,7 +97,7 @@ function App() {
         <Route index element={<HomePage
           cartData={cartData}
         />} />
-        
+
         {/*Menu Page*/}
         <Route path='/menu' element={<MenuPage
           products={products}
@@ -123,6 +123,7 @@ function App() {
         {/*Cart Page*/}
         <Route path='/mycart' element={<CartPage
           cartData={cartData}
+          loadCart={loadCart}
         />} />
 
         {/*Account Page*/}

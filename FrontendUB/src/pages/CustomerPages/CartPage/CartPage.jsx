@@ -13,7 +13,7 @@ import { userCartDataExpanded } from './UserCart';
 
 
 
-function CartPage({ cartData }) {
+function CartPage({ cartData, loadCart }) {
 
   console.log(cartData);
   const [cartItems, setCartItems] = useState(userCartDataExpanded);
@@ -60,6 +60,7 @@ function CartPage({ cartData }) {
                 setCartItems={setCartItems}
                 cartItems={cartItems}
                 cartData={cartData}
+                loadCart = { loadCart }
               />
 
             </div>

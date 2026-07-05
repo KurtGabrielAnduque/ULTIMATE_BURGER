@@ -29,7 +29,31 @@ def user_cart(request, user_id):
 
         return Response(serializer.data)
     
+# delete specific product or view specific product
+@api_view(['GET','DELETE'])
+def delete_cart_item(request, cart_id):
 
+    try:
+        cart_item = Cart.objects.get(id = cart_id)
+    
+    except Cart.DoesNotExist:
+        return Response(
+                    {"detail": "This cart item is not found inside your cart database"},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+    
+    # for future update, changing specific addons configurations
+    if request.method == 'GET':
+        
+        serializer = CartSerializer(cart_item)
+
+        return Response(serializer.data)
+    
+    if request.method == 'DELETE':
+
+        cart_item.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @api_view(['POST'])
 def create_cart(request):

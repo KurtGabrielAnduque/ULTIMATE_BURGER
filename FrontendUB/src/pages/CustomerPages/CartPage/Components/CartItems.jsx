@@ -1,13 +1,25 @@
 import React from 'react'
+import axios from 'axios';
+import { useState } from 'react';
 import { pesoFormatter } from '../../../../utils/ProjectUtilities';
-
 import { Trash2 } from 'lucide-react';
 
-function CartItems({ setCartItems, cartItems, cartData }) {
-    // Delete function for the trash can
-    const handleDelete = (cartIdToDelete) => {
-        setCartItems(prev => prev.filter(item => item.cartId !== cartIdToDelete));
-    };
+function CartItems({ cartData, loadCart }) {
+
+
+    // api integration for cart deletion
+    const deleteCartItem = async (cartId) => {
+        try {
+            await axios.delete(
+                `http://127.0.0.1:8000/cart/item/${cartId}/`
+            );
+
+            loadCart();
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <>
@@ -83,7 +95,7 @@ function CartItems({ setCartItems, cartItems, cartData }) {
                         {/* Remove Button */}
                         <div className="col-span-1 sm:col-span-1 flex justify-end">
                             <button
-                                onClick={() => handleDelete(item.cartId)}
+                                onClick={() => deleteCartItem(item.id)}
                                 className="p-2 text-zinc-500 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-colors w-full sm:w-auto flex justify-center"
                             >
                                 <Trash2 size={20} />
