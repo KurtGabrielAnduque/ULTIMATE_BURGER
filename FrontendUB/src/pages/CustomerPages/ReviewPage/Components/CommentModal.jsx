@@ -7,6 +7,21 @@ function CommentModal({ closeModal }) {
     const [hoveredStar, setHoveredStar] = useState(0);
     const [reviewText, setReviewText] = useState("");
 
+    const reviewFormat = () => {
+
+        const payload = {
+            user : 1 ,
+            rating_star: rating,
+            text : reviewText
+        }
+
+        console.log( JSON.stringify(payload, null, 2));
+
+        return payload
+    }
+
+
+
     return (
         <>
             <div className="fixed inset-0 bg-black/70 z-[100] flex items-center justify-center p-4 sm:p-6 backdrop-blur-sm animate-in fade-in duration-200">
@@ -108,9 +123,7 @@ function CommentModal({ closeModal }) {
                         
                         <button
                             onClick={() => {
-                                // Add your submit logic here later!
-                                console.log("Submitted!", { rating, reviewText });
-                                closeModal();
+                                reviewFormat();
                             }}
                             disabled={rating === 0} // Prevent submission if no rating is given
                             className="w-full sm:w-2/3 bg-red-500 text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-1 transition-all duration-300 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none order-1 sm:order-2"
