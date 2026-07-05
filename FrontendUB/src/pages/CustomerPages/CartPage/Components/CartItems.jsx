@@ -1,8 +1,9 @@
 import React from 'react'
+import { pesoFormatter } from '../../../../utils/ProjectUtilities';
 
 import { Trash2 } from 'lucide-react';
 
-function CartItems({ setCartItems, cartItems }) {
+function CartItems({ setCartItems, cartItems, cartData }) {
     // Delete function for the trash can
     const handleDelete = (cartIdToDelete) => {
         setCartItems(prev => prev.filter(item => item.cartId !== cartIdToDelete));
@@ -10,13 +11,13 @@ function CartItems({ setCartItems, cartItems }) {
 
     return (
         <>
-            {cartItems.length === 0 ? (
+            {cartData.length === 0 ? (
                 <div className="text-center py-10 bg-zinc-900 border border-zinc-800 rounded-3xl p-6 sm:p-8">
                     <p className="text-zinc-500 text-lg">Your cart is currently empty.</p>
                 </div>
             ) : (
-                cartItems.map((item) => (
-                    <div key={item.cartId} className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-zinc-900 border border-zinc-800 p-4 sm:p-0 sm:bg-transparent sm:border-0 rounded-2xl sm:rounded-none sm:border-b sm:border-zinc-800 sm:pb-6">
+                cartData.map((item) => (
+                    <div key={item.id} className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center bg-zinc-900 border border-zinc-800 p-4 sm:p-0 sm:bg-transparent sm:border-0 rounded-2xl sm:rounded-none sm:border-b sm:border-zinc-800 sm:pb-6">
 
                         {/* Product Image & Info */}
                         <div className="col-span-1 sm:col-span-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -26,34 +27,37 @@ function CartItems({ setCartItems, cartItems }) {
 
                                 {/* Dynamic Base Price (Handles 0 base price items like Fries) */}
                                 <p className="text-red-500 font-semibold text-sm mb-3">
-                                    Base Price: ₱{(item.product.basePrice > 0 ? item.product.basePrice : (item.selections.selectedSize?.price || 0)).toFixed(2)}
+                                    Base Price: {pesoFormatter.format(parseFloat(item.product.base_price) > 0 ? parseFloat(item.product.base_price) : (parseFloat(item.selections.size?.price) || 0))}
                                 </p>
 
                                 {/* Dynamic Configurations */}
+                                <p className="text-red-500 font-semibold text-sm mb-1">
+                                    Additional Charges:
+                                </p>
                                 <div className="text-xs text-zinc-400 space-y-1.5">
                                     {item.selections.selectedSize && (
                                         <span className="block flex justify-between">
-                                            <span>• Size: {item.selections.selectedSize.name}</span>
+                                            <span>• Size: {item.selections.size.name}</span>
                                             {/* Only show + price if base price isn't already 0 (like Fries) */}
-                                            {item.product.basePrice > 0 && <span>+ ₱{item.selections.selectedSize.price.toFixed(2)}</span>}
+                                            {parseFloat(item.product.basePrice) > 0 && <span>+ {pesoFormatter.format(parseFloat(item.selections.selectedSize.price))}</span>}
                                         </span>
                                     )}
-                                    {item.selections.selectedFlavor && (
+                                    {item.selections.flavor && (
                                         <span className="block flex justify-between">
-                                            <span>• Flavor: {item.selections.selectedFlavor.name}</span>
-                                            <span>+ ₱{item.selections.selectedFlavor.price.toFixed(2)}</span>
+                                            <span>• Flavor: {item.selections.flavor.name}</span>
+                                            <span>+ {pesoFormatter.format(parseFloat(item.selections.flavor.price))}</span>
                                         </span>
                                     )}
-                                    {item.selections.selectedAddOns?.map(addon => (
+                                    {item.selections.addons?.map(addon => (
                                         <span key={addon.id} className="block flex justify-between pr-4 sm:pr-0">
-                                            <span className="truncate pr-2">• Add-on: {addon.name} {addon.selectedSauces ? `(${addon.selectedSauces[0].name})` : ''}</span>
-                                            <span className="shrink-0">+ ₱{addon.price.toFixed(2)}</span>
+                                            <span className="truncate pr-2">• Add-on: {addon.name} {addon.sauces && addon.sauces.length > 0 ? `(${addon?.sauces[0]?.name})` : ''}</span>
+                                            <span className="shrink-0">+ {pesoFormatter.format(parseFloat(addon.price))}</span>
                                         </span>
                                     ))}
-                                    {item.selections.selectedDrinks?.map(drink => (
+                                    {item.selections.drinks?.map(drink => (
                                         <span key={drink.id} className="block flex justify-between pr-4 sm:pr-0">
                                             <span className="truncate pr-2">• Drink: {drink.name}</span>
-                                            <span className="shrink-0">+ ₱{drink.price.toFixed(2)}</span>
+                                            <span className="shrink-0">+ {pesoFormatter.format(parseFloat(drink.price))}</span>
                                         </span>
                                     ))}
                                 </div>
@@ -73,7 +77,7 @@ function CartItems({ setCartItems, cartItems }) {
                         {/* Item Total */}
                         <div className="col-span-1 sm:col-span-2 flex items-center justify-between sm:justify-end">
                             <span className="sm:hidden text-zinc-500 font-medium">Total:</span>
-                            <span className="text-lg font-bold text-white">₱{item.totalPrice.toFixed(2)}</span>
+                            <span className="text-lg font-bold text-white">{pesoFormatter.format(parseFloat(item.total_price))}</span>
                         </div>
 
                         {/* Remove Button */}

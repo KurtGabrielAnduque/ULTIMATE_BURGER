@@ -1,6 +1,8 @@
 import React from 'react'
 import { ShoppingBag, Store, Wallet, CreditCard } from 'lucide-react'
 
+import { pesoFormatter } from '../../../../utils/ProjectUtilities'
+
 function OrderSummary({serviceMode, setServiceMode, paymentMethod, setPaymentMethod, subtotal, setIsConfirmModalOpen}) {
     return (
         <div className="bg-zinc-900 border border-zinc-800 p-6 sm:p-8 rounded-3xl sticky top-28 shadow-2xl">
@@ -60,7 +62,7 @@ function OrderSummary({serviceMode, setServiceMode, paymentMethod, setPaymentMet
             <div className="border-t border-zinc-800 pt-6 mb-6">
                 <div className="flex justify-between items-center mb-2">
                     <span className="text-zinc-400">Subtotal</span>
-                    <span className="text-white font-medium">₱{subtotal.toFixed(2)}</span>
+                    <span className="text-white font-medium">{pesoFormatter.format(subtotal)}</span>
                 </div>
                 <div className="flex justify-between items-center mb-4">
                     <span className="text-zinc-400">Convenience Fee</span>
@@ -68,7 +70,7 @@ function OrderSummary({serviceMode, setServiceMode, paymentMethod, setPaymentMet
                 </div>
                 <div className="flex justify-between items-end">
                     <span className="text-lg font-bold text-white">Total</span>
-                    <span className="text-3xl font-extrabold text-red-500">₱{subtotal.toFixed(2)}</span>
+                    <span className="text-3xl font-extrabold text-red-500">{pesoFormatter.format(subtotal)}</span>
                 </div>
             </div>
 

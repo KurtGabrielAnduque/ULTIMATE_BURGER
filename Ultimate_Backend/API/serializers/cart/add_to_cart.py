@@ -2,7 +2,6 @@ from rest_framework import serializers
 from api.models import Product, Sauce, Drink, AddOn, Size, Flavor
 from api.models import Cart
 from api.models import User
-from .products import ProductListSerializer
 from decimal import Decimal
 
 
@@ -127,12 +126,12 @@ class AddToCartSerializer(serializers.ModelSerializer):
 
         total = Decimal(product.base_price)
 
+        if selected_size:
+            total = selected_size.price # since we need to change the base value of the product according to size
+        
         if selected_flavor:
             total += selected_flavor.price
         
-        if selected_size:
-            total = selected_size.price # since we need to change the base value of the product according to size
-
         for addon in selected_addons:
             total += addon['addonId'].price
         
@@ -141,25 +140,40 @@ class AddToCartSerializer(serializers.ModelSerializer):
         
         final_price = total * quantity
 
-        print(selections)
+        
         # convert back to json field but now we must use the validated data
         selection_json = {
             "flavor": (
-                selected_flavor.id
+                {
+                    "id": selected_flavor.id,
+                    "name": selected_flavor.name,
+                    "price": str(selected_flavor.price)
+                }
                 if selected_flavor else None
             ),
 
             "size": (
-                selected_size.id
+                {
+                    "id": selected_size.id,
+                    "name": selected_size.name,
+                    "price": str(selected_size.price)
+                 
+                }
                 if selected_size else None
             ),
 
             "addons": [
                 
                 {
-                    "addonId": addon["addonId"].id,
+                    "id": addon["addonId"].id,
+                    "name": addon["addonId"].name,
+                    "price": str(addon["addonId"].price),
                     "sauces": [
-                        sauce.id
+                        {
+                            'id': sauce.id,
+                            'name': sauce.name
+                        }
+                        
                         for sauce in addon.get("sauces", [])
                     ]
                 }
@@ -168,12 +182,14 @@ class AddToCartSerializer(serializers.ModelSerializer):
 
             "drinks": [
                 {
-                    "drinkId": drink["drinkId"].id
+                    "id": drink["drinkId"].id,
+                    "name": drink["drinkId"].name,
+                    "price": str(drink["drinkId"].price)
                 }
                 for drink in selected_drinks
             ]
         }
-        print(selection_json)
+        
         # save to cart
         cart_item = Cart.objects.create(
             product = product,
@@ -185,11 +201,3 @@ class AddToCartSerializer(serializers.ModelSerializer):
 
 
         return cart_item
-
-# for get only
-class CartSerializer(serializers.ModelSerializer):
-    product = ProductListSerializer(read_only = True)
-
-    class Meta:
-        model = Cart
-        fields = ['id','product','user','quantity','selections','total_price']

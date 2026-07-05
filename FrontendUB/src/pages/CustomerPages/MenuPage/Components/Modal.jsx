@@ -33,7 +33,7 @@ function Modal({ product, closeModal, loadCart }) {
         let response = await axios.get(`http://127.0.0.1:8000/products/${product.id}`);
         const data = response.data
         setDetailedProduct(response.data);
-        console.log(data);
+        // console.log(data);
         // Set default selections AFTER data is fetched
         if (data.sizes && data.sizes.length > 0) setSelectedSize(data.sizes[0].id);
         if (data.flavors && data.flavors.length > 0) setSelectedFlavor(data.flavors[0].id);
@@ -211,7 +211,7 @@ function Modal({ product, closeModal, loadCart }) {
                 <Flavors
                   detailedProduct={detailedProduct}
                   selectedFlavor={selectedFlavor}
-                  setSelectedFlavor={selectedFlavor}
+                  setSelectedFlavor={setSelectedFlavor}
                 />
               )}
 

@@ -15,6 +15,7 @@ import { userCartDataExpanded } from './UserCart';
 
 function CartPage({ cartData }) {
 
+  console.log(cartData);
   const [cartItems, setCartItems] = useState(userCartDataExpanded);
   const [serviceMode, setServiceMode] = useState('dine-in'); // 'dine-in' | 'take-out'
   const [paymentMethod, setPaymentMethod] = useState('gcash'); // 'otc' | 'gcash' | 'paymaya'
@@ -23,8 +24,8 @@ function CartPage({ cartData }) {
   // Calculate Subtotal dynamically
   let subtotal = 0
 
-  cartItems.map((item) => {
-    subtotal += item.totalPrice
+  cartData.map((item) => {
+    subtotal += parseFloat(item.total_price)
   });
 
 
@@ -58,6 +59,7 @@ function CartPage({ cartData }) {
               <CartItems
                 setCartItems={setCartItems}
                 cartItems={cartItems}
+                cartData={cartData}
               />
 
             </div>
