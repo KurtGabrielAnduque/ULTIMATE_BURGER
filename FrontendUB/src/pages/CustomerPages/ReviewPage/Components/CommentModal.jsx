@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Star, X, ImagePlus, MessageSquareHeart } from 'lucide-react';
+import axios from 'axios';
 
-function CommentModal({ closeModal }) {
+function CommentModal({ closeModal, loadReview }) {
     // State to track the star rating interaction
     const [rating, setRating] = useState(0);
     const [hoveredStar, setHoveredStar] = useState(0);
@@ -15,11 +16,21 @@ function CommentModal({ closeModal }) {
             text : reviewText
         }
 
-        console.log( JSON.stringify(payload, null, 2));
 
         return payload
     }
 
+    const addReview = async () => {
+        const reviewPayLoad = reviewFormat();
+
+        await axios.post('http://127.0.0.1:8000/reviews/post/', reviewPayLoad);
+
+        // reload the reviews
+        await loadReview();
+
+        // close the modal
+        closeModal();
+    }
 
 
     return (
@@ -102,13 +113,17 @@ function CommentModal({ closeModal }) {
                             ></textarea>
                         </div>
 
-                        {/* Photo Upload (UI Placeholder) */}
-                        <div className="mb-4">
-                            <button className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-dashed border-slate-300 rounded-xl text-slate-600 font-semibold hover:border-red-400 hover:text-red-500 hover:bg-red-50 transition-all w-full justify-center group">
-                                <ImagePlus size={20} className="group-hover:scale-110 transition-transform" />
-                                Add Food Photos
-                            </button>
-                        </div>
+                        {/* Photo Upload (UI Placeholder) 
+                            =========== Future Update Let user add their pictures ============
+
+                            <div className="mb-4">
+                                <button className="flex items-center gap-2 px-4 py-3 bg-white border-2 border-dashed border-slate-300 rounded-xl text-slate-600 font-semibold hover:border-red-400 hover:text-red-500 hover:bg-red-50 transition-all w-full justify-center group">
+                                    <ImagePlus size={20} className="group-hover:scale-110 transition-transform" />
+                                    Add Food Photos
+                                </button>
+                            </div>
+
+                        */}
 
                     </div>
 
@@ -122,9 +137,7 @@ function CommentModal({ closeModal }) {
                         </button>
                         
                         <button
-                            onClick={() => {
-                                reviewFormat();
-                            }}
+                            onClick={addReview}
                             disabled={rating === 0} // Prevent submission if no rating is given
                             className="w-full sm:w-2/3 bg-red-500 text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-red-600 hover:shadow-lg hover:shadow-red-500/30 hover:-translate-y-1 transition-all duration-300 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none order-1 sm:order-2"
                         >

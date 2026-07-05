@@ -2,7 +2,10 @@ import React from 'react'
 import { ReviewData } from '../ReviewsData';
 import { Star, MessageSquarePlus } from "lucide-react";
 import { useState } from 'react';
+import daysjs from 'dayjs';
 import CommentModal from './CommentModal';
+
+
 
 const marqueeStyle = `
   @keyframes marquee {
@@ -20,7 +23,10 @@ const marqueeStyle = `
 `;
 
 
-function CommentSlider() {
+function CommentSlider({ reviewsData, loadReview }) {
+
+
+
     const [onComment, setOnComment] = useState(false);
 
     return (
@@ -40,26 +46,28 @@ function CommentSlider() {
 
                         {/* Duplicate ReviewData so the loop is seamless */}
                         <div className="marquee-track gap-5 px-4">
-                            {[...ReviewData, ...ReviewData].map((review, idx) => (
-                                <div
-                                    key={idx}
-                                    className="flex-shrink-0 w-72 bg-zinc-800 border border-zinc-700
+                            {reviewsData.length > 0 && (
+                                [...reviewsData, ...reviewsData].map((review, idx) => (
+                                    <div
+                                        key={idx}
+                                        className="flex-shrink-0 w-72 bg-zinc-800 border border-zinc-700
                                rounded-xl p-5 mx-2"
-                                >
-                                    <div className="flex gap-0.5 mb-3">
-                                        {[...Array(review.rating)].map((_, i) => (
-                                            <Star key={i} size={13} className="fill-yellow-400 text-yellow-400" />
-                                        ))}
+                                    >
+                                        <div className="flex gap-0.5 mb-3">
+                                            {[...Array(parseInt(review.rating_star))].map((_, i) => (
+                                                <Star key={i} size={13} className="fill-yellow-400 text-yellow-400" />
+                                            ))}
+                                        </div>
+                                        <p className="text-zinc-300 text-sm leading-relaxed mb-4 line-clamp-3">
+                                            "{review.text}"
+                                        </p>
+                                        <div className="border-t border-zinc-700 pt-3">
+                                            <p className="text-white text-sm font-semibold">{review.user.first_name} {review.user.last_name}</p>
+                                            <p className="text-zinc-500 text-xs mt-0.5">{daysjs(review.created_at).format('MMMM D')}</p>
+                                        </div>
                                     </div>
-                                    <p className="text-zinc-300 text-sm leading-relaxed mb-4 line-clamp-3">
-                                        "{review.text}"
-                                    </p>
-                                    <div className="border-t border-zinc-700 pt-3">
-                                        <p className="text-white text-sm font-semibold">{review.name}</p>
-                                        <p className="text-zinc-500 text-xs mt-0.5">{review.date}</p>
-                                    </div>
-                                </div>
-                            ))}
+                                ))
+                            )}
                         </div>
                     </div>
 
@@ -83,6 +91,7 @@ function CommentSlider() {
                         {onComment && (
                             <CommentModal
                                 closeModal={() => setOnComment(false)}
+                                loadReview={loadReview}
                             />
                         )}
                     </div>

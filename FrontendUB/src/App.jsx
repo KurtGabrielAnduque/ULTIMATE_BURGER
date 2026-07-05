@@ -59,7 +59,20 @@ function AdminNavigator({ children }) {
 function App() {
   const [products, setProducts] = useState([]);
   const [cartData, setCart] = useState([]);
+  const [reviewsData, setReviewsData] = useState([]);
 
+  // fetch all the reviews data
+  const loadReview = async () => {
+    try {
+      let reviews = await axios.get('http://127.0.0.1:8000/reviews/');
+      setReviewsData(reviews.data);
+    } catch (error) {
+      console.log(`Error Fetching Data: ${error}`)
+    }
+  }
+
+
+  // fetch the cart of the specific user or user that currently login
   const loadCart = async () => {
     try {
       let responseCart = await axios.get('http://127.0.0.1:8000/cart/user/1/');
@@ -68,7 +81,6 @@ function App() {
       console.log(`Error Fetching Data: ${error}`)
     }
   }
-
 
 
   // fetch the general menu data
@@ -83,10 +95,12 @@ function App() {
 
   }
 
+  
 
   useEffect(() => {
     productsData();
     loadCart();
+    loadReview();
   }, [])
 
   return (
@@ -113,6 +127,8 @@ function App() {
         {/*Review Page*/}
         <Route path='/review' element={<ReviewPage
           cartData={cartData}
+          reviewsData={reviewsData}
+          loadReview={loadReview}
         />} />
 
         {/*Contact Page*/}

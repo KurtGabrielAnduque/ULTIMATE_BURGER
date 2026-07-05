@@ -10,7 +10,14 @@ import ImageSlider from "./Components/ImageSlider";
 
 
 
-function ReviewPage({ cartData }) {
+{/*
+    Other features to complete:
+    - shop rating computation average all the ratings of user and turn into decimal type and 1 decimal place
+    - let the user upload image in their comment
+    - if user press one comment in the slider it should turn into modal showing the complete comment aswell as the uploaded image.
+    */}
+
+function ReviewPage({ cartData, reviewsData, loadReview }) {
   
   return (
     <div className="bg-zinc-950 min-h-screen flex flex-col">
@@ -24,7 +31,11 @@ function ReviewPage({ cartData }) {
         <ReviewIntro/>
 
         {/* ── Review Carousel + Feedback CTA ────────────────────────────── */}
-        <CommentSlider/>
+        <CommentSlider 
+          reviewsData = {reviewsData}
+          loadReview = {loadReview}
+        
+        />
 
         {/* ── Tagline strip ─────────────────────────────────────────────── */}
         <div className="mt-12 py-5 text-center">
