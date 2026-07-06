@@ -60,6 +60,18 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cartData, setCart] = useState([]);
   const [reviewsData, setReviewsData] = useState([]);
+  const [userData, setUserData] = useState({});
+
+  // fetch the user data
+  const loadUser = async () => {
+    try{
+      let response = await axios.get('http://127.0.0.1:8000/user/profile/1/');
+      setUserData(response.data);
+      
+    }catch (error){
+      console.log(`Error Fetching Data: ${error}`)
+    }
+  }
 
   // fetch all the reviews data
   const loadReview = async () => {
@@ -101,7 +113,10 @@ function App() {
     productsData();
     loadCart();
     loadReview();
+    loadUser();
   }, [])
+
+
 
   return (
     <>
@@ -145,6 +160,8 @@ function App() {
         {/*Account Page*/}
         <Route path='/account' element={<AccountPage
           cartData={cartData}
+          userData = {userData}
+          loadUser = {loadUser}
         />} />
 
         {/*Order Page for customers*/}

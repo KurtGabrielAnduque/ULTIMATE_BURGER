@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import CustomerNavbar from '../Components/CustomerNavbar'
-import { User, Save} from 'lucide-react'
+import { User, Save } from 'lucide-react'
 
 import ProfileHero from './Components/ProfileHero'
 import EditModal from './Components/EditModal'
@@ -9,7 +9,7 @@ import UserDetails from './Components/UserDetails'
 
 
 
-function AccountPage({ cartData }) {
+function AccountPage({ cartData, userData, loadUser }) {
   const [userEdit, setUserEdit] = useState(false);
 
   const sampleData = [{
@@ -20,7 +20,7 @@ function AccountPage({ cartData }) {
     Email: 'anduquekurt@gmail.com',
     PhoneNumber: '09687929730',
     Address: [{
-      addressID : '1',
+      addressID: '1',
       Street: '49 Int. Tomas Morato',
       Barangay: 'Brgy. Kristong Hari',
       City: 'Quezon City',
@@ -29,17 +29,27 @@ function AccountPage({ cartData }) {
     }],
   }]
 
+
+  if (!userData || Object.keys(userData).length === 0) {
+    return (
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center text-white font-bold">
+        Loading Profile...
+      </div>
+    );
+  }
+
+
   return (
 
     <div className='bg-zinc-950 flex flex-col min-h-screen font-sans'>
       {/*Import Navigation Bar*/}
-      <CustomerNavbar cartData={cartData}/>
+      <CustomerNavbar cartData={cartData} />
 
       <div className='max-w-7xl mx-auto px-4 py-12 md:py-20 flex-grow w-full'>
 
         {/*Profile Hero page in this part*/}
         <ProfileHero
-          sampleData={sampleData}
+          userData={userData}
         />
 
 
@@ -57,6 +67,7 @@ function AccountPage({ cartData }) {
 
               <UserDetails
                 sampleData={sampleData}
+                userData = {userData}
               />
 
 
@@ -78,6 +89,8 @@ function AccountPage({ cartData }) {
               <EditModal
                 sampleData={sampleData}
                 closeModal={() => setUserEdit(false)}
+                userData = {userData}
+                loadUser = {loadUser}
               />
             )}
 
