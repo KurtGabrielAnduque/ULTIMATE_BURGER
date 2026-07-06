@@ -13,7 +13,7 @@ import ImageSlider from "./Components/ImageSlider";
 {/*
     Other features to complete:
     - shop rating computation average all the ratings of user and turn into decimal type and 1 decimal place
-    - let the user upload image in their comment
+    - let the user upload image in their comment (read comment in other components)
     - if user press one comment in the slider it should turn into modal showing the complete comment aswell as the uploaded image.
     */}
 

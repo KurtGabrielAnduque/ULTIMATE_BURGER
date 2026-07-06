@@ -18,6 +18,7 @@ function AccountPage({ cartData }) {
     FirstName: 'Kurt Gabriel',
     LastName: 'Anduque',
     Email: 'anduquekurt@gmail.com',
+    PhoneNumber: '09687929730',
     Address: [{
       addressID : '1',
       Street: '49 Int. Tomas Morato',
@@ -26,7 +27,6 @@ function AccountPage({ cartData }) {
       Region: 'Metro Manila',
       ZipCode: '1112',
     }],
-    PhoneNumber: '09687929730',
   }]
 
   return (
@@ -84,16 +84,11 @@ function AccountPage({ cartData }) {
           </div>
         </div>
       </div>
-
-
-
     </div>
 
   )
 
 }
-
-
 
 export default AccountPage
 

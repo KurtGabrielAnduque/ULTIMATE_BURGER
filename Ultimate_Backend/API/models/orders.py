@@ -23,6 +23,16 @@ class Order(models.Model):
     order_service = models.CharField(max_length=100, choices=SERVICE_CHOICES)
     order_total = models.DecimalField(max_digits=8, decimal_places=2)
     order_status = models.CharField(max_length=100, choices=STATUS_CHOICES, default='Pending')
+
+    # save the snapshot of address of the order
+    # this will avoid changing if the user updates their address to 
+    # maintain the address on which the product is deliver
+    shipping_street = models.CharField(max_length=100)
+    shipping_barangay = models.CharField(max_length=100)
+    shipping_city = models.CharField(max_length=100)
+    shipping_region = models.CharField(max_length=100)
+    shipping_zip_code = models.CharField(max_length=10)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

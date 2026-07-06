@@ -18,7 +18,7 @@ class User(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
-    role = models.CharField(max_length=100, choices=ROLE_CHOICES, default='Member')
+    role = models.CharField(max_length=100, choices=ROLE_CHOICES, default='customer')
     
     email = models.EmailField(unique=True) #since every user emails must be unique
     contact_number = models.CharField(max_length=20, unique=True) #since every user contact number must be unique
