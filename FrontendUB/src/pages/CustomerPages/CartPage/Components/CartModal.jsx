@@ -1,6 +1,67 @@
 import { CheckCircle2 } from 'lucide-react';
 
-function CartModal({serviceMode, paymentMethod, cartItems, subtotal, setIsConfirmModalOpen}) {
+function CartModal({ serviceMode, paymentMethod, cartItems, subtotal, setIsConfirmModalOpen, userData }) {
+    const userAddress = userData.address?.[0];
+
+    const payLoadFormat = () => {
+        let cartIdCollector = [];
+
+        // get every id of cart 
+        cartItems.forEach(item => {
+            cartIdCollector.push(item.cartId);
+        });
+
+
+        const payload = {
+            // can I use address of the user from the get method in app.jsx??
+            /*
+
+            const [userData, setUserData] = useState({});
+            const loadUser = async () => {
+                try{
+                let response = await axios.get('http://127.0.0.1:8000/user/profile/1/');
+                setUserData(response.data);
+                
+                }catch (error){
+                console.log(`Error Fetching Data: ${error}`)
+                }
+            }
+
+            
+            */
+            // user : should I include the user ID?
+            cart_items: cartIdCollector,
+            order_service: serviceMode,
+            payment_method : paymentMethod,
+            shipping_street: userAddress.street,
+            shipping_barangay: userAddress.barangay,
+            shipping_city: userAddress.city,
+            shipping_region: userAddress.region,
+            shipping_zip_code: userAddress.zip_code,
+        }
+
+        console.log(JSON.stringify(payload, null, 2));
+
+
+        /*
+        sample payload after running the code:
+        {
+            "cart_items": [
+                1,
+                2,
+                3
+            ],
+            "order_service": "dine-in",
+            "shipping_street": "49 Int. Tomas Morato",
+            "shipping_barangay": "Brgy. Kristong Hari",
+            "shipping_city": "Navotas City",
+            "shipping_region": "Metro Manila",
+            "shipping_zip_code": "1112"
+        }
+        */
+    }
+
+
     return (
         <div className="fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
             <div className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl flex flex-col relative overflow-hidden">
@@ -49,10 +110,7 @@ function CartModal({serviceMode, paymentMethod, cartItems, subtotal, setIsConfir
                         Back
                     </button>
                     <button
-                        onClick={() => {
-                            alert(`Proceeding to ${paymentMethod.toUpperCase()} payment gateway!`);
-                            setIsConfirmModalOpen(false);
-                        }}
+                        onClick={payLoadFormat}
                         className="w-2/3 bg-red-500 text-white font-bold py-3 sm:py-4 rounded-xl hover:bg-red-600 transition-all shadow-lg shadow-red-500/20"
                     >
                         Confirm & Pay

@@ -13,7 +13,7 @@ import { userCartDataExpanded } from './UserCart';
 
 
 
-function CartPage({ cartData, loadCart }) {
+function CartPage({ cartData, loadCart, userData }) {
 
   console.log(cartData);
   const [cartItems, setCartItems] = useState(userCartDataExpanded);
@@ -93,6 +93,7 @@ function CartPage({ cartData, loadCart }) {
           cartItems = {cartItems}
           subtotal = {subtotal}
           setIsConfirmModalOpen = {setIsConfirmModalOpen}
+          userData = { userData }
         />
       )}
     </>

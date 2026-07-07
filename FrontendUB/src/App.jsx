@@ -155,6 +155,7 @@ function App() {
         <Route path='/mycart' element={<CartPage
           cartData={cartData}
           loadCart={loadCart}
+          userData = {userData}
         />} />
 
         {/*Account Page*/}
