@@ -1,35 +1,21 @@
 import { CheckCircle2 } from 'lucide-react';
+import { pesoFormatter } from '../../../../utils/ProjectUtilities';
 
-function CartModal({ serviceMode, paymentMethod, cartItems, subtotal, setIsConfirmModalOpen, userData }) {
+
+function CartModal({ serviceMode, paymentMethod, subtotal, setIsConfirmModalOpen, userData, cartData }) {
     const userAddress = userData.address?.[0];
-
+    
     const payLoadFormat = () => {
         let cartIdCollector = [];
 
         // get every id of cart 
-        cartItems.forEach(item => {
-            cartIdCollector.push(item.cartId);
+        cartData.forEach(item => {
+            cartIdCollector.push(item.id);
         });
 
 
         const payload = {
-            // can I use address of the user from the get method in app.jsx??
-            /*
-
-            const [userData, setUserData] = useState({});
-            const loadUser = async () => {
-                try{
-                let response = await axios.get('http://127.0.0.1:8000/user/profile/1/');
-                setUserData(response.data);
-                
-                }catch (error){
-                console.log(`Error Fetching Data: ${error}`)
-                }
-            }
-
-            
-            */
-            // user : should I include the user ID?
+            user : 1,
             cart_items: cartIdCollector,
             order_service: serviceMode,
             payment_method : paymentMethod,
@@ -43,22 +29,7 @@ function CartModal({ serviceMode, paymentMethod, cartItems, subtotal, setIsConfi
         console.log(JSON.stringify(payload, null, 2));
 
 
-        /*
-        sample payload after running the code:
-        {
-            "cart_items": [
-                1,
-                2,
-                3
-            ],
-            "order_service": "dine-in",
-            "shipping_street": "49 Int. Tomas Morato",
-            "shipping_barangay": "Brgy. Kristong Hari",
-            "shipping_city": "Navotas City",
-            "shipping_region": "Metro Manila",
-            "shipping_zip_code": "1112"
-        }
-        */
+        return payload
     }
 
 
@@ -88,17 +59,18 @@ function CartModal({ serviceMode, paymentMethod, cartItems, subtotal, setIsConfi
                     </div>
 
                     <div className="space-y-3 mb-4 max-h-32 overflow-y-auto pr-2">
-                        {cartItems.map(item => (
-                            <div key={item.cartId} className="flex justify-between items-start">
+                        
+                        {cartData.map(item => (
+                            <div key={item.id} className="flex justify-between items-start">
                                 <span className="text-white text-sm"><span className="text-zinc-500">{item.quantity}x</span> {item.product.name}</span>
-                                <span className="text-white text-sm font-medium">₱{item.totalPrice.toFixed(2)}</span>
+                                <span className="text-white text-sm font-medium">{pesoFormatter.format(item.total_price)}</span>
                             </div>
                         ))}
                     </div>
 
                     <div className="flex justify-between items-center pt-4 border-t border-zinc-800">
                         <span className="text-white font-bold">Total to Pay:</span>
-                        <span className="text-red-500 font-extrabold text-xl">₱{subtotal.toFixed(2)}</span>
+                        <span className="text-red-500 font-extrabold text-xl">{pesoFormatter.format(subtotal)}</span>
                     </div>
                 </div>
 

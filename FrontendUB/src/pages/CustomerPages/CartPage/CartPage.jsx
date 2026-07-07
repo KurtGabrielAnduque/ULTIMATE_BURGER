@@ -8,15 +8,9 @@ import CartModal from './Components/CartModal';
 
 import { useState } from 'react';
 
-// Import the data the proper Mock data we create for preparation in backend part
-import { userCartDataExpanded } from './UserCart';
-
 
 
 function CartPage({ cartData, loadCart, userData }) {
-
-  console.log(cartData);
-  const [cartItems, setCartItems] = useState(userCartDataExpanded);
   const [serviceMode, setServiceMode] = useState('dine-in'); // 'dine-in' | 'take-out'
   const [paymentMethod, setPaymentMethod] = useState('gcash'); // 'otc' | 'gcash' | 'paymaya'
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -57,8 +51,6 @@ function CartPage({ cartData, loadCart, userData }) {
 
               {/* Import the Cart Items Here*/}
               <CartItems
-                setCartItems={setCartItems}
-                cartItems={cartItems}
                 cartData={cartData}
                 loadCart = { loadCart }
               />
@@ -90,10 +82,10 @@ function CartPage({ cartData, loadCart, userData }) {
         <CartModal
           serviceMode = {serviceMode}
           paymentMethod = {paymentMethod}
-          cartItems = {cartItems}
           subtotal = {subtotal}
           setIsConfirmModalOpen = {setIsConfirmModalOpen}
           userData = { userData }
+          cartData = {cartData}
         />
       )}
     </>
