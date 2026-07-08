@@ -17,7 +17,7 @@ function CartModal({ serviceMode, paymentMethod, subtotal, setIsConfirmModalOpen
         const payload = {
             user : 1,
             cart_items: cartIdCollector,
-            order_service: serviceMode,
+            service_type: serviceMode,
             payment_method : paymentMethod,
             shipping_street: userAddress.street,
             shipping_barangay: userAddress.barangay,
