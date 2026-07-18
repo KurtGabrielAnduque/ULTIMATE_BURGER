@@ -115,29 +115,33 @@ class PostOrderSerializer(serializers.ModelSerializer):
         # this is good because we are not going to try querying in the creation part
 
         data['validated_cart'] = validated_cart
+
+
+        return data
             
 
     
-    def create(self, validate_data):
-        cart_items = validate_data.pop('cart_items', None)
-        payment_method = validate_data.pop('payment_method',None)
+    def create(self, validated_data):
+        cart_items = validated_data.pop('cart_items', None)
+        validated_cart = validated_data.pop('validated_cart',None)
+        payment_method = validated_data.pop('payment_method',None)
 
-        order_total = Decimal(0.0)
+        order_total = Decimal(0)
 
 
-        for cart_item in cart_items:
+        for cart_item in validated_cart:
             order_total += cart_item.total_price
 
 
         order = Order.objects.create(
-            **validate_data,
+            **validated_data,
             order_total = order_total
         )
 
         order.order_numer = f'ORD-{order.id:05d}'
         order.save(update_fields=['order_number'])
 
-        for cart_item in cart_items:
+        for cart_item in validated_cart:
             OrderItem.objects.create(
             order = order,# I dont we havent create the Order yet,
             product = cart_item.product,
@@ -147,6 +151,8 @@ class PostOrderSerializer(serializers.ModelSerializer):
             quantity = cart_item.quantity,
             total_price = cart_item.total_price,
         )
+
+        return order
 
 
 
